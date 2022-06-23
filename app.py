@@ -1,7 +1,40 @@
+from misc import *
+
 from flask import Flask, flash, jsonify, redirect, render_template, request, session
 from datetime import datetime
 import re
 import os
+
+
+from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String, ForeignKey
+engine = create_engine('sqlite:///posts.db', echo=True)
+meta = MetaData()
+
+posts_details = Table(
+   'posts_details', meta, 
+   Column('post_id', Integer, primary_key = True), 
+   Column('path', String),
+   Column('class', String),
+   Column('title', String),
+)
+
+posts_order = Table(
+   'posts_order', meta, 
+   Column('photo_id', Integer, ForeignKey('posts_details.post_id')), 
+   Column('order', Integer),
+)
+
+
+
+meta.create_all(engine)
+
+conn = engine.connect()
+initial_posts = get_all_images()
+conn.execute(posts_details.insert(), initial_posts)
+for i in range(len(initial_posts)):
+    conn.execute(posts_order.insert(), [i])
+
+
 
 app = Flask(__name__)
 
@@ -30,27 +63,6 @@ def index():
 
 @app.route("/gallery")
 def gallery():
-
-    filenames = next(os.walk("static/Images"), (None, None, []))[2]  # [] if no file
-    #print(filenames)
-    newlist = []
-    extensions = []
-    for k in filenames:
-        newlist.append(os.path.splitext(k)[0])
-        extensions.append(os.path.splitext(k)[1])
-
-    #for i in range(len(newlist)):
-        #print("\'" + newlist[i].split()[0] + "\'")
-
-    images = []
-    for i in range(len(filenames)):
-        if extensions[i] == ".jpg" or extensions[i] == ".jpeg": #or extensions[i] == ".png":
-            tempDict = {}
-            filename = filenames[i]
-            classname = newlist[i].split()[0]
-            altname = newlist[i]
-            tempDict['path'] = "static/Images/" + filename
-            tempDict['class'] = classname
-            tempDict['title'] = altname
-            images.append(tempDict)
+    
+    
     return render_template("gallery.html",images=images)

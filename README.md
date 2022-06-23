@@ -10,3 +10,6 @@ python -m flask run #start the server
 
 ctrl alt / to comment out everything
 VS Marketplace Link: https://marketplace.visualstudio.com/items?itemName=philsinatra.nested-comments
+
+
+https://www.tutorialspoint.com/sqlalchemy/sqlalchemy_core_using_multiple_tables.htm
