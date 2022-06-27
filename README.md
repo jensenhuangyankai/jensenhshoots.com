@@ -13,3 +13,5 @@ VS Marketplace Link: https://marketplace.visualstudio.com/items?itemName=philsin
 
 
 https://www.tutorialspoint.com/sqlalchemy/sqlalchemy_core_using_multiple_tables.htm
+
+https://realpython.com/flask-google-login/
