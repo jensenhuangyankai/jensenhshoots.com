@@ -1,4 +1,4 @@
-from mimetypes import init
+from startup import *
 from misc import *
 
 from flask import Flask, flash, jsonify, redirect, render_template, request, session
@@ -6,41 +6,7 @@ from datetime import datetime
 import re
 import os
 
-
-from sqlalchemy import create_engine, MetaData, Table, Column, Integer, String, ForeignKey, select,func
-engine = create_engine('sqlite:///posts.db', echo=True)
-meta = MetaData()
-
-posts_details = Table(
-   'posts_details', meta, 
-   Column('hash', String, primary_key = True),
-   Column('path', String),
-   Column('class', String),
-   Column('title', String),
-)
-
-posts_order = Table(
-   'posts_order', meta, 
-   Column('hash', Integer, ForeignKey('posts_details.hash')), 
-   Column('order', Integer),
-)
-
-
-
-meta.create_all(engine)
-
-conn = engine.connect()
-initial_posts = get_all_images()
-conn.execute(posts_details.insert(), initial_posts) #populate posts_details
-initial_order = []
-for i in range(len(initial_posts)):
-    tempDict = {}
-    tempDict['hash'] = initial_posts[i]['hash']
-    tempDict['order'] = i
-    initial_order.append(tempDict)
-conn.execute(posts_order.insert(), initial_order)
-
-
+start()
 
 
 app = Flask(__name__)
@@ -86,3 +52,7 @@ def gallery():
             images.append(tempDict)
 
     return render_template("gallery.html",images=images)
+
+@app.route("/drag")
+def drag():
+    return render_template("drag.html")

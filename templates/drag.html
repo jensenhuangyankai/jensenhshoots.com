@@ -1,0 +1,19 @@
+<!-- (A) LOAD CSS + JS -->
+<link rel="stylesheet" href="static/css/drag.css"/>
+<script src="static/js/drag.js"></script>
+ 
+<!-- (B) THE LIST -->
+<ul id="sortlist">
+  <li>First</li>
+  <li>Second</li>
+  <li>Third</li>
+  <li>Forth</li>
+  <li>Fifth</li>
+</ul>
+ 
+<!-- (C) INIT ON PAGE LOAD -->
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+  slist(document.getElementById("sortlist"));
+});
+</script>

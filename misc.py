@@ -2,7 +2,6 @@ import os
 import sys
 import hashlib
 
-
 def get_all_images():
     filenames = next(os.walk("static/Images"), (None, None, []))[2]  # [] if no file
     #print(filenames)
@@ -27,7 +26,6 @@ def get_all_images():
 
     #print(images)
     return images
-
 
 
 # BUF_SIZE is totally arbitrary, change for your app!
