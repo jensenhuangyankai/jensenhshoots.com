@@ -62,3 +62,7 @@
 *.max
 
 *.zip
+
+
+__pycache__
+*.db
